@@ -31,7 +31,7 @@ public class CandidateFormBak extends UI {
 	FormLayout form;
 
 	@Autowired
-	TodoList todoList;
+	TodoList todoList; 
 
 	@Override
 	protected void init(VaadinRequest request) {
