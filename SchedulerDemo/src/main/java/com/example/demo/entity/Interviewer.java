@@ -13,8 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
+
 @Entity
 @Table(name = "interviewer")
+@Builder
 public class Interviewer {
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
@@ -79,5 +82,24 @@ public class Interviewer {
 	}
 	public void setManagerEmailId(String managerEmailId) {
 		this.managerEmailId = managerEmailId;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Interviewer interviewer;
+		try {
+			interviewer = (Interviewer) obj;
+		} catch (Exception e) {
+			return false;
+		}
+		return this.getEmailId().equals(interviewer != null ? interviewer.getEmailId() : null);
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((emailId == null) ? 0 : emailId.hashCode());
+		return result;
 	}
 }

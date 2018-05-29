@@ -15,6 +15,9 @@ import com.example.demo.model.ScheduleModel;
 
 public class SchedulerServiceHelper {
 	public static ScheduleModel buildModelFromEntity(Schedule schedule) {
+		if(schedule != null) {
+			//ScheduleModel.builder();
+		}
 		ScheduleModel scheduleModel = new ScheduleModel();
 		scheduleModel.setCandId(schedule.getId().getCandidateEmailId());
 		scheduleModel.setInterviewerId(schedule.getId().getInterviewerEmailId());

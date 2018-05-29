@@ -68,7 +68,7 @@ public class InterviewerForm extends FormLayout {
 
 	private void updateInterviewer() throws ValidationException {
 		fetchFromUI();
-		interviewerFormData.interviewerService.updateInterviewer(interviewerFormData.interviewerModel);
+		interviewerFormData.interviewerService.updateInterviewerByEmail(interviewerFormData.interviewerModel);
 	}
 
 	public void fetchFromUI() {
@@ -80,7 +80,6 @@ public class InterviewerForm extends FormLayout {
 		interviewerFormData.interviewerModel.setAvilabilityStatus(interviewerFormData.status.getValue());
 		// interviewerFormData.interviewerModel.setFirstname();(interviewerFormData.feedback.getValue());
 		AvailableTimeSlotsModel availableTimeSlot = new AvailableTimeSlotsModel();
-		System.out.println("***************Date: "+ interviewerFormData.date.getValue().toString());
 		availableTimeSlot.setSlotDate(interviewerFormData.date.getValue().toString());
 		availableTimeSlot.setSlotRange(interviewerFormData.timeSlot.getValue());		
 		interviewerFormData.interviewerModel.getAvailableTimeSlot().add(availableTimeSlot);

@@ -14,8 +14,7 @@ import com.example.demo.model.CandidateModel;
 import com.example.demo.model.InterviewerModel;
 
 public class InterviewerServiceHelper {
-	public static Interviewer extractInterviewerObjectFromModel(InterviewerModel model) {
-		Interviewer interviewer = new Interviewer();
+	public static Interviewer extractInterviewerObjectFromModel(InterviewerModel model, Interviewer interviewer) {
 		interviewer.setAvilabilityStatus(model.getAvilabilityStatus());
 		interviewer.setEmailId(model.getEmailId());
 		interviewer.setFirstname(model.getFirstname());

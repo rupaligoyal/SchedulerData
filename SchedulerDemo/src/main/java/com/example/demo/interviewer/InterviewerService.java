@@ -11,7 +11,7 @@ import com.example.demo.util.ValidationException;
 public interface InterviewerService {
 	boolean createInterviewer(InterviewerModel interviewerModel) throws ValidationException;
 	String updateInterviewer(InterviewerModel interviewerModel) throws ValidationException;
-	List<Interviewer> searchCandidate(InterviewerModel interviewerModel) ;
 	InterviewerModel searchInterviewerById(Long id) ;
 	String deleteInterviewerById(Long id) ;
+	String updateInterviewerByEmail(InterviewerModel model) throws ValidationException;
 }

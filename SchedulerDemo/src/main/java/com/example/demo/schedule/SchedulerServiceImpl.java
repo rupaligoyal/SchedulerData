@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.cache.InterviewerCache;
 import com.example.demo.candidate.CandidateConstants;
 import com.example.demo.candidate.CandidateRepository;
 import com.example.demo.entity.Candidate;
@@ -126,6 +127,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 	public ScheduleModel scheduleInterviewByCandidateEmail(String emailId) throws Exception {
 		Schedule schedule = null;
 		
+		System.out.println("****************Priniting cache**************");
+		InterviewerCache.print();
+		System.out.println("***********Print done");
 		
 		if(SchedulerServiceHelper.isAlreadyScheduled(emailId, schedulerRepository)) {
 			new Exception("The candidate's interview is already scheduled");

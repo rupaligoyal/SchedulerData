@@ -1,11 +1,14 @@
 package com.example.demo.interviewer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.cache.InterviewerCache;
 import com.example.demo.candidate.CandidateServiceHelper;
 import com.example.demo.entity.Candidate;
 import com.example.demo.entity.Interviewer;
@@ -22,10 +25,12 @@ public class InterviewerServiceImpl implements InterviewerService {
 	public boolean createInterviewer(InterviewerModel interviewerModel) throws ValidationException {
 
 		// extract candidate object from model class
-		Interviewer interviewer = InterviewerServiceHelper.extractInterviewerObjectFromModel(interviewerModel);
+		Interviewer interviewer = new Interviewer(); 
+		InterviewerServiceHelper.extractInterviewerObjectFromModel(interviewerModel, interviewer);
 
 		// store candidate in DB
 		interviewerRepository.save(interviewer);
+		InterviewerCache.SingletonCacheConcurrentHashMap.getInstance().put(interviewer, new Date());
 		return true;
 
 	}
@@ -40,17 +45,37 @@ public class InterviewerServiceImpl implements InterviewerService {
 			
 			InterviewerServiceHelper.buildInterviewerDetails(interviewerModel, interviewer);			
 			interviewerRepository.save(interviewer.get());
-
+			
+			//update cache
+			InterviewerCache.SingletonCacheConcurrentHashMap.getInstance().put(interviewer.get(), new Date());
+			
 			return "Interveiwer Updated Successfully..!!";
 		}	
 		return "Failed to update interviewer..";
 	}
 
-	
-
 	@Override
-	public List<Interviewer> searchCandidate(InterviewerModel interviewerModel) {
-		return null;
+	public String updateInterviewerByEmail(InterviewerModel model) throws ValidationException {
+
+		//candidateValidator.validateCandidate(candidateModel);
+		Interviewer interviewer = new Interviewer();
+		interviewer.setEmailId(model.getEmailId());
+		Example<Interviewer> interviewerExample = Example.of(interviewer);
+		
+		List<Interviewer> interviewerList = interviewerRepository.findAll(interviewerExample);
+		if (interviewerList.size()>1) {
+			return "Cannot update the candidate. This email is assciated with multiple candidates..!!";
+		}else {
+			InterviewerServiceHelper.extractInterviewerObjectFromModel(model, interviewerList.get(0));		
+			interviewerRepository.save(interviewerList.get(0));
+			
+			if(InterviewerCache.SingletonCacheConcurrentHashMap.getInstance().containsKey(interviewerList.get(0)) ) {
+				InterviewerCache.SingletonCacheConcurrentHashMap.getInstance().remove(interviewerList.get(0));
+				InterviewerCache.SingletonCacheConcurrentHashMap.getInstance().put(interviewerList.get(0), new Date());
+			};
+			
+			return "Interviewer Updated Successfully..!!";
+		}
 	}
 
 	@Override
@@ -58,6 +83,7 @@ public class InterviewerServiceImpl implements InterviewerService {
 		Optional<Interviewer> interviewer = interviewerRepository.findById(id);
 		if (interviewer.isPresent()) {
 			interviewerRepository.deleteById(id);
+			InterviewerCache.SingletonCacheConcurrentHashMap.getInstance().remove(interviewer.get());
 			return "Interviewer Successfully deleted..!!";
 		}
 		return "Failed to delete candidate..!!";
