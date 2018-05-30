@@ -72,4 +72,15 @@ public class CandidateServiceHelper {
 		model.setStatus(candidate.get().getStatus());
 		return model;
 	}
+	
+	
+	public static Candidate createCandidateExampleByStatus(String status) {
+		return createCandidateExample(null, null, null, null, null, status, null, null);
+	}
+	public static Candidate createCandidateExample(Long candId, String firstname, String lastname, String priority,
+			Set<CandidateAvailableTimeSlot> availableTimeSlot, String status, String feedback, String emailId) {
+		return Candidate.builder().candId(candId).firstname(firstname).lastname(lastname).priority(priority)
+				.availableTimeSlot(availableTimeSlot).status(status).feedback(feedback).emailId(emailId).build();
+
+	}
 }

@@ -16,15 +16,28 @@ public class CandidateForm extends FormLayout {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	CandidateFormData data ;
-	/*CandidateFormData data = new CandidateFormData(new TextField("First Name"), new TextField("Last Name"),
-			new TextField("Priority"), new TextField("Status"), new TextField("Feed Back"), new TextField("Email"),
-			new Button("Create"), new Button("Update"), new Button("Delete"));*/
 	
 
 	public void registerListener(MyUi myUI) {
-//		data.candidate = new CandidateModel();
-		//data.candidateService = new CandidateServiceImpl();
-
+		
+		data.searchAvailableCandidates.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		data.searchAllCandidates.addClickListener(e -> {
+			try {
+				searchAllCandidates();
+			} catch (ValidationException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
+		data.searchAllCandidates.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		data.searchAllCandidates.addClickListener(e -> {
+			try {
+				searchAllCandidates();
+			} catch (ValidationException e1) {
+				e1.printStackTrace();
+			}
+		});
+		
 		data.create.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		data.create.addClickListener(e -> {
 			try {
@@ -53,12 +66,19 @@ public class CandidateForm extends FormLayout {
 		HorizontalLayout hlayout = new HorizontalLayout(data.create, data.update, data.delete);
 		hlayout.setSpacing(true);
 		data.create.setClickShortcut(KeyCode.ENTER);
-		addComponents(data.candidatelabel, data.firstname, data.lastname, data.priority, data.status, data.feedback, data.email, data.date, data.timeSlot, hlayout);
+		addComponents(data.candidateSearchLabel, data.searchAvailableCandidates, data.searchCancelledCandidates,
+				data.searchCScheduledCandidates, data.searchRejectedCandidates, data.searchSelectedCandidates,
+				data.searchAllCandidates, data.candidatelabel, data.firstname, data.lastname, data.priority,
+				data.status, data.feedback, data.email, data.date, data.timeSlot, hlayout);
 	}
 
 	public void setCandidate(CandidateModel candidate) {
 		this.data.candidate = candidate;
 		setVisible(true);
+	}
+	
+	private void searchAllCandidates() throws ValidationException{
+		//data.candidateService.
 	}
 
 	private void createCandidate() throws ValidationException {

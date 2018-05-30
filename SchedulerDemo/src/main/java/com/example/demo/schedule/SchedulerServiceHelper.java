@@ -14,16 +14,15 @@ import com.example.demo.interviewer.InterviewerRepository;
 import com.example.demo.model.ScheduleModel;
 
 public class SchedulerServiceHelper {
-	public static ScheduleModel buildModelFromEntity(Schedule schedule) {
-		if(schedule != null) {
-			//ScheduleModel.builder();
+	public static ScheduleModel buildModelFromEntity(Schedule schedule) throws Exception {
+		if (schedule != null) {
+			return ScheduleModel.builder().candId(schedule.getId().getCandidateEmailId())
+					.interviewerId(schedule.getId().getInterviewerEmailId())
+					.interviewStatus(schedule.getInterviewStatus()).timeOfInterview(schedule.getTimeOfInterview())
+					.build();
+		}else {
+			return null;
 		}
-		ScheduleModel scheduleModel = new ScheduleModel();
-		scheduleModel.setCandId(schedule.getId().getCandidateEmailId());
-		scheduleModel.setInterviewerId(schedule.getId().getInterviewerEmailId());
-		scheduleModel.setInterviewStatus(schedule.getInterviewStatus());
-		scheduleModel.setTimeOfInterview(schedule.getTimeOfInterview());
-		return scheduleModel;
 	}
 	
 	public static Candidate findCandidateByEmail(String emailId, CandidateRepository candidateRepository) {

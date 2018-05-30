@@ -125,7 +125,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	
 	@Override
 	public ScheduleModel scheduleInterviewByCandidateEmail(String emailId) throws Exception {
-		Schedule schedule = null;
+		Schedule schedule = new Schedule();
 		
 		System.out.println("****************Priniting cache**************");
 		InterviewerCache.print();
@@ -137,7 +137,6 @@ public class SchedulerServiceImpl implements SchedulerService {
 			//find candidate by id in DB
 			Candidate candidate = new Candidate();
 			candidate.setEmailId(emailId);
-			
 			Example<Candidate> candidateExample = Example.of(candidate);
 			Optional<Candidate> candidateResult = candidateRepository.findOne(candidateExample);
 			
@@ -160,7 +159,6 @@ public class SchedulerServiceImpl implements SchedulerService {
 				
 				
 				if(result.size() > 0) {
-					schedule = new Schedule();
 					ScheduleId scheduleId = new ScheduleId();
 					scheduleId.setCandidateEmailId(candidateResult.get().getEmailId());
 					scheduleId.setInterviewerEmailId(result.get(0).getEmailId());
@@ -181,6 +179,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 					//say no candidate is available during that period
 					throw new Exception("No interviewer is available during this time..!!");
 				}
+				
 			}else {
 				throw new Exception("Candidate Id is not present. Please try with another Id.");
 			}

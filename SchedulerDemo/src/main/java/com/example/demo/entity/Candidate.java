@@ -14,8 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Builder;
+import lombok.ToString;
+
 @Entity
 @Table(name = "candidate")
+@Builder
+@ToString
 public class Candidate implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -36,6 +41,22 @@ public class Candidate implements Serializable{
 	private String status;
 	private String feedback;
 	private String emailId;
+	
+	public Candidate() {
+	}
+	
+	public Candidate(Long candId, String firstname, String lastname, String priority,
+			Set<CandidateAvailableTimeSlot> availableTimeSlot, String status, String feedback, String emailId) {
+		super();
+		this.candId = candId;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.priority = priority;
+		this.availableTimeSlot = availableTimeSlot;
+		this.status = status;
+		this.feedback = feedback;
+		this.emailId = emailId;
+	}
 	
 	public Long getCandId() {
 		return candId;

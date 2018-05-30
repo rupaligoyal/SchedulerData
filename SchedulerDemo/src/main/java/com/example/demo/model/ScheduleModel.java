@@ -1,16 +1,14 @@
 package com.example.demo.model;
 
 import lombok.Builder;
-import lombok.ToString;
 
 @Builder
-@ToString
 public class ScheduleModel {
 	private String candId;
 	private String interviewerId;
 	private String timeOfInterview;
 	private String interviewStatus;
-	
+		
 	public String getCandId() {
 		return candId;
 	}

@@ -103,8 +103,12 @@ public class CandidateServiceImpl implements CandidateService {
 	
 
 	@Override
-	public List<Candidate> searchCandidate(CandidateModel candidateModel) {
-		return null;
+	public List<Candidate> searchAllCandidate(String status) {
+		if(status.equals(CandidateConstants.CANDIDATE_ALL)) {
+			return candidateRepository.findAll();
+		}else {
+			return candidateRepository.findAll(Example.of(CandidateServiceHelper.createCandidateExampleByStatus(status)));
+		}
 	}
 
 	@Override

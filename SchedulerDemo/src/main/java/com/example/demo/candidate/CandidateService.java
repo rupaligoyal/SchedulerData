@@ -12,9 +12,9 @@ import com.example.demo.util.ValidationException;
 public interface CandidateService {
 	boolean createCandidate(CandidateModel candidateModel) throws ValidationException;
 	String updateCandidate(CandidateModel candidateModel) throws ValidationException;
-	List<Candidate> searchCandidate(CandidateModel candidateModel) ;
 	CandidateModel searchCandidateById(Long id) ;
 	String deleteCandidateById(Long id) ;
 	String deleteCandidate(String emailId);
 	String updateCandidateByEmail(CandidateModel model) throws ValidationException;
+	List<Candidate> searchAllCandidate(String status);
 }

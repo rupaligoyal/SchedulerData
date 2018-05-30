@@ -6,6 +6,7 @@ public interface CandidateConstants {
 	public static String CANDIDATE_SELECTED = "C";
 	public static String CANDIDATE_REJECTED = "R";
 	public static String CANDIDATE_CANCELLED_INTERVIEW = "C";
+	public static String CANDIDATE_ALL = "ALL";
 	/*public static String CANDIDATE_STATUS_ACCEPTED="A";
 	public static String CANDIDATE_STATUS_REJECTED="R";
 	public static String CANDIDATE_STATUS_CANCELLED="CAN";

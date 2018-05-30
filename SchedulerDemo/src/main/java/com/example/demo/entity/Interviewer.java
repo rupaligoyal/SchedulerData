@@ -17,7 +17,6 @@ import lombok.Builder;
 
 @Entity
 @Table(name = "interviewer")
-@Builder
 public class Interviewer {
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
